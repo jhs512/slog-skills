@@ -1,0 +1,8 @@
+{
+  "name": "slog",
+  "version": "0.1.0",
+  "description": "slog(slog.gg) 블로그 글 CRUD 자동화 스킬 그룹 — apiKey 셋업, 글 생성/조회/수정/삭제, slog 에디터 문법 지원",
+  "author": {
+    "name": "jhs512"
+  }
+}
