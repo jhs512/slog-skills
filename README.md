@@ -9,12 +9,25 @@
 /plugin install slog@slog-skills
 ```
 
-## 스킬
+## 구조
+
+- **`cli/slog.mjs`** — 실제 동작을 담당하는 CLI (Node 18+, 의존성 없음). 인증, CRUD, pull/push 동기화, **modifiedAt 기반 충돌 감지 + git 3-way 자동 병합**(충돌 시 마커 남기고 종료코드 3), **히스토리**(모든 명령 `~/.slog/logs/*.jsonl` 기록 + 덮어쓰기·삭제 전 `~/.slog/backup/<id>/` 자동 백업)까지 세밀한 로직은 전부 여기에.
+- **스킬은 CLI 위의 얇은 층** — 언제 어떤 명령을 쓰는지, 본문을 어떤 문법으로 쓰는지만 안내.
 
 | 스킬 | 용도 |
 |---|---|
-| `slog:setup` | apiKey 확보(카카오 로그인 쿠키 추출 또는 로그인 API) → `~/.slog/apiKey.secret` 저장·검증 |
-| `slog:posts` | 글 생성/조회/수정/삭제/목록/검색. slog 에디터 문법(references/editor.md)과 REST API 스펙(references/api.md) 포함 |
+| `slog:setup` | apiKey 확보(카카오 로그인 쿠키 추출 또는 `slog auth login`) → CLI에 등록·검증 |
+| `slog:posts` | `slog` CLI로 글 생성/조회/수정/삭제/목록/검색. slog 에디터 문법(references/editor.md) 포함 |
+
+### CLI 단독 사용
+
+```bash
+node cli/slog.mjs help
+node cli/slog.mjs auth set-key <apiKey>
+node cli/slog.mjs pull 14300        # ~/.slog/docs/14300.md
+# ...파일 편집...
+node cli/slog.mjs push 14300        # 서버가 더 최신이면 자동 3-way 병합, 충돌 시 마커+exit 3
+```
 
 ## 사용 예시
 
