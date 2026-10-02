@@ -2,6 +2,8 @@
 
 slog에는 WYSIWYG 에디터가 없다. 글 본문(`content`)은 **GFM 마크다운 원문 문자열**을 그대로 저장하며, Toast UI Viewer가 렌더 시점에 아래 문법을 해석한다. API로 글을 쓸 때는 이 문서의 문법만 사용하면 프론트에서 그대로 렌더된다. HTML/JSON 래핑, 전처리 저장 없음.
 
+만화 작성·수정 시 [comic-gen LLM 문법 가이드](https://jhs512.github.io/comic-gen/llm-guide.md)를 참조한다.
+
 ## 1. 표준 마크다운 (GFM)
 
 헤딩, 리스트, 표, 인용, 체크박스(`- [ ]`), 취소선, 자동링크, 이미지 `![alt](url)`, 수평선 전부 지원.
