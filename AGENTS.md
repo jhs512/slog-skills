@@ -1,3 +1,7 @@
+# 글 공개 설정
+
+- 새 글은 기본적으로 공개하고 목록에 노출한다. 작성할 때 [posts 스킬](skills/posts/SKILL.md)의 공개 설정을 따른다.
+
 # 그림·만화 작성
 
 - 그림·만화를 작성하거나 수정하기 전에 [comic-gen LLM 문법 가이드](https://jhs512.github.io/comic-gen/llm-guide.md)를 읽고, 문법과 검증 예제를 기준으로 작성한다. 문서를 읽을 수 없으면 comic-gen 담당 채팅에 유효한 가이드를 요청한다.

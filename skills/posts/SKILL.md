@@ -38,8 +38,8 @@ $SLOG delete <id> --yes
 ### 새 글 작성
 
 1. **먼저 [references/editor.md](references/editor.md)를 읽고** slog 문법으로 본문 파일을 작성한다. `# 요약` 컨벤션 시작 권장.
-2. `$SLOG create --title "..." --content-file 본문.md`
-   - 사용자가 공개 여부를 명시하지 않았으면 플래그 없이(비공개) 만들고, 출력된 URL을 보여준 뒤 공개 여부를 물어라. 공개는 `--published true --listed true`.
+2. `$SLOG create --title "..." --content-file 본문.md --published true --listed true`
+   - 새 글의 기본값은 공개 및 목록 노출이다. 별도의 공개 확인 없이 생성하고, 결과의 공개 상태와 URL을 확인한다. 사용자가 해당 글의 공개 설정을 명시하면 그 요청을 따른다.
 3. create는 자동으로 pull까지 해두므로 이어서 수정하려면 `~/.slog/docs/<id>.md`를 편집 후 push.
 
 ### 글 수정 (pull → 편집 → push)
