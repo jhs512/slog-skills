@@ -303,6 +303,27 @@ async function doPut(id, meta, content, flags, serverContent) {
   console.log(`pushed: ${id}번 글 (modifiedAt ${dto.modifiedAt}, ${dto.published ? (dto.listed ? "공개" : "미노출") : "비공개"})`);
 }
 
+// 서버가 엔드포인트에 따라 초 이하 자릿수를 다르게 돌려준다(나노초 vs 마이크로초, 반올림됨).
+// 문자열 비교하면 같은 시각인데도 "서버 변경"으로 오탐하므로,
+// 나노초 정수로 바꾼 뒤 더 거친 쪽 정밀도로 반올림해서 비교한다.
+function sameModified(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  const parse = (t) => {
+    const m = String(t).match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d+))?(Z|[+-]\d{2}:?\d{2})$/);
+    if (!m) return null;
+    const ms = Date.parse(m[1] + m[3]);
+    if (Number.isNaN(ms)) return null;
+    const frac = (m[2] || "").slice(0, 9).padEnd(9, "0");
+    return { ns: BigInt(ms) * 1000000n + BigInt(frac), digits: (m[2] || "").length };
+  };
+  const x = parse(a), y = parse(b);
+  if (!x || !y) return false;
+  const unit = 10n ** BigInt(9 - Math.min(x.digits, y.digits, 9));
+  const round = (n) => (n + unit / 2n) / unit;
+  return round(x.ns) === round(y.ns);
+}
+
 async function cmdPush(args) {
   const { flags, rest } = parseFlags(args);
   const id = rest[0] || die("사용법: slog push <id> [--title t] [--published true|false] [--listed true|false] [--force]");
@@ -313,7 +334,7 @@ async function cmdPush(args) {
 
   const server = await api("GET", `/post/api/v1/posts/${id}`);
 
-  if (server.modifiedAt !== meta.modifiedAt && !flags.force) {
+  if (!sameModified(server.modifiedAt, meta.modifiedAt) && !flags.force) {
     // 서버가 우리가 아는 것보다 최신 → 병합 필요
     const serverFile = path.join(DOCS_DIR, `${id}.server.md`);
     fs.writeFileSync(serverFile, server.content, "utf-8");
@@ -350,7 +371,7 @@ async function cmdPush(args) {
     process.exit(3);
   }
 
-  if (server.modifiedAt !== meta.modifiedAt && flags.force) {
+  if (!sameModified(server.modifiedAt, meta.modifiedAt) && flags.force) {
     console.log(`경고: 서버 변경(${server.modifiedAt})을 무시하고 강제 덮어씁니다.`);
   }
 
@@ -412,7 +433,7 @@ async function cmdStatus(args) {
       {
         id: Number(id),
         localChanged: working !== base,
-        serverChanged: server.modifiedAt !== meta.modifiedAt,
+        serverChanged: !sameModified(server.modifiedAt, meta.modifiedAt),
         localModifiedAt: meta.modifiedAt,
         serverModifiedAt: server.modifiedAt,
       },
