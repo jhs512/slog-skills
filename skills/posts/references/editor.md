@@ -14,6 +14,8 @@ slog에는 WYSIWYG 에디터가 없다. 글 본문(`content`)은 **GFM 마크다
 
 ## 2. 커스텀 블록 (다이어그램/임베드)
 
+실행용 코드 블록(런박스)과 Marp 발표는 [runbox-marp.md](runbox-marp.md)를 먼저 읽는다. 런박스는 `java run`, `js memory`, `react-starter-1`처럼 실행을 명시한다. Marp는 `marp` 펜스 또는 문서 맨 앞의 `marp: true` frontmatter를 사용하며, 아래 기존 PPT 문법과는 별개다.
+
 아래 언어 태그의 코드펜스는 렌더 직전 자동으로 커스텀 블록으로 변환된다. **여는 펜스 뒤 즉시 개행** 필수. `$$tag ... $$` 형태로 직접 써도 되지만, 코드펜스 형태가 GitHub/에디터 하이라이팅이 돼서 권장.
 
 | 펜스 언어 | 기능 | 렌더 방식 |
@@ -118,7 +120,7 @@ CodePen — `height`(기본 400), `width`(기본 100%, 단위 없으면 px):
 
 - 글 상세에 자동으로 "PPT 보기" 버튼이 뜬다. URL 해시 `#2` = 2번째 슬라이드.
 - PPT 렌더 시 자동 변형: PlantUML에 `left to right direction`, mermaid stateDiagram에 `direction LR`이 주입됨.
-- Marp 프론트매터(`marp:` 포함 `---` 블록)가 맨 앞에 있으면 자동 제거됨.
+- 기존 PPT 덱 내부의 Marp 헤더는 기존 PPT 방식으로 처리한다. 글 전체를 Marp로 작성할 때는 문서 맨 앞의 `marp: true` frontmatter를 유지한다. 새 Marp 작성법은 [runbox-marp.md](runbox-marp.md)를 따른다.
 
 ## 5. Raw 아티팩트 문법
 

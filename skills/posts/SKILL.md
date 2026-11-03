@@ -1,6 +1,6 @@
 ---
 name: posts
-description: slog(slog.gg) 블로그 글 CRUD — 번들된 slog CLI로 글 생성/조회/수정/삭제/목록/검색. "슬로그에 글 써줘/올려줘", "slog 글 수정/삭제", "내 글 목록" 등의 요청에 사용. 본문 작성·수정 전 에디터 문법 레퍼런스 필수 참조.
+description: slog(slog.gg) 글 생성·조회·수정·삭제·검색과 글 안의 런박스 실행 코드·Marp 발표 작성. 슬로그 글 작업에 번들된 CLI와 에디터 문법 레퍼런스를 사용한다.
 ---
 
 # slog 글 CRUD
@@ -38,6 +38,7 @@ $SLOG delete <id> --yes
 ### 새 글 작성
 
 1. **먼저 [references/editor.md](references/editor.md)를 읽고** slog 문법으로 본문 파일을 작성한다. `# 요약` 컨벤션 시작 권장.
+   - 실행용 코드·런박스 또는 Marp 발표를 넣을 때는 [references/runbox-marp.md](references/runbox-marp.md)의 지원 펜스·예제·발표 링크 규칙을 함께 적용한다.
 2. `$SLOG create --title "..." --content-file 본문.md --published true --listed true`
    - 새 글의 기본값은 공개 및 목록 노출이다. 별도의 공개 확인 없이 생성하고, 결과의 공개 상태와 URL을 확인한다. 사용자가 해당 글의 공개 설정을 명시하면 그 요청을 따른다.
 3. create는 자동으로 pull까지 해두므로 이어서 수정하려면 `~/.slog/docs/<id>.md`를 편집 후 push.
@@ -46,6 +47,7 @@ $SLOG delete <id> --yes
 
 1. `$SLOG pull <id>` → `~/.slog/docs/<id>.md`
 2. **[references/editor.md](references/editor.md) 문법 기준으로** 파일을 편집. 기존 커스텀 블록(펜스·`$$hide`·`<details ppt-id>`·`surl:` 링크)을 깨뜨리지 않았는지 검토.
+   - 런박스의 `run`·`memory` 모드, React 스타터킷, Marp 블록을 수정할 때는 [references/runbox-marp.md](references/runbox-marp.md)를 읽는다. 일반 코드 표시와 실행, 기존 PPT와 Marp 발표를 구분한다.
 3. `$SLOG push <id>` — 공개 상태를 바꿀 때만 `--published/--listed` 추가.
 
 **충돌 처리 (push가 알아서 감지한다):**

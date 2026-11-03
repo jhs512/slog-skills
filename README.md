@@ -17,7 +17,9 @@
 | 스킬 | 용도 |
 |---|---|
 | `slog:setup` | apiKey 확보(카카오 로그인 쿠키 추출 또는 `slog auth login`) → CLI에 등록·검증 |
-| `slog:posts` | `slog` CLI로 글 생성/조회/수정/삭제/목록/검색. slog 에디터 문법(references/editor.md) 포함 |
+| `slog:posts` | `slog` CLI로 글 생성/조회/수정/삭제/목록/검색. 에디터 문법과 런박스·Marp 작성법 포함 |
+
+런박스의 `java run`·`js memory`·React 스타터킷과 Marp 발표 작성법은 [전용 참조](skills/posts/references/runbox-marp.md)에 있다. 일반 코드 표시와 실행을 구분하고, 기존 PPT와 새 Marp 문법을 각각 유지한다.
 
 ### CLI 단독 사용
 
